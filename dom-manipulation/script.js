@@ -85,7 +85,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
         const userQuoteInputValue=input2.value.trim()
         localStorage.setItem(addedCategory, JSON.stringify(userCategoryInputValue))
         localStorage.setItem(addedQuote, JSON.stringify(userCategoryInputValue))
-        
+        localStorage.getItem(addedCategory)
 
 
     } 
@@ -94,5 +94,15 @@ document.addEventListener('DOMContentLoaded', ()=>{
     addQuoteButton.id='addQuote'
     document.body.appendChild(addQuoteButton)
     addQuoteButton.addEventListener('click', createAddQuoteForm)
-
+    
+  function importFromJsonFile(event) {
+    const fileReader = new FileReader();
+    fileReader.onload = function(event) {
+      const importedQuotes = JSON.parse(event.target.result);
+      quotes.push(...importedQuotes);
+      saveQuotes();
+      alert('Quotes imported successfully!');
+    };
+    fileReader.readAsText(event.target.files[0]);
+  }
 })
