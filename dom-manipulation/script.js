@@ -50,12 +50,10 @@ document.addEventListener('DOMContentLoaded', ()=>{
     const randomTextIndexDisplayed=Math.floor(Math.random()*displayedText.length)
     const displayedTextElement=displayedText[randomTextIndexDisplayed]
     const displayedDiv=document.getElementById('quoteDisplay')
-    const h2=document.createElement('h2')
-    h2.textContent=category
-    displayedDiv.appendChild(h2)
-    const p=document.createElement('p')
-    p.textContent=`Quote: ${displayedTextElement}`
-    displayedDiv.appendChild(p)
+    displayedDiv.innerHTML=`
+    <h2>${category}</h2>
+    <p>Quote: ${displayedTextElement}</p>
+    `
     }
     button.addEventListener('click', showRandomQuote)
     const userCategory=document.getElementById('newQuoteCategory')
