@@ -85,8 +85,12 @@ document.addEventListener('DOMContentLoaded', ()=>{
         const userQuoteInputValue=input2.value.trim()
         localStorage.setItem(addedCategory, JSON.stringify(userCategoryInputValue))
         localStorage.setItem(addedQuote, JSON.stringify(userCategoryInputValue))
-        localStorage.getItem(addedCategory)
-
+        const categoryLocalStorage=localStorage.getItem(addedCategory)
+        const categoryArray=[...categoryArray]
+        function checkLocalSotarge(inputString) {
+            const contains = ["application/json", "Blob"];
+        
+        }
 
     } 
     const addQuoteButton=document.createElement('button')
@@ -105,4 +109,5 @@ document.addEventListener('DOMContentLoaded', ()=>{
     };
     fileReader.readAsText(event.target.files[0]);
   }
+  
 })
