@@ -61,18 +61,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
     const addButton=document.getElementById('addQuote')
 
     function createAddQuoteForm(){
-       /*  const userCategoryInputValue=userCategory.value.trim()
-        const userQuoteInputValue=userQuote.value.trim()
-        for (let element of arrayQuotes){
-            if(userCategoryInputValue===element.category){
-                element.text.push(userQuoteInputValue)
-                alert('Quote added')
-                break;
-            }
-            else {
-                alert('Quote category not found')
-            }
-        }*/
+       
       const form= document.createElement('form')
        const input1=document.createElement('input')
        const input2=document.createElement('input')
@@ -92,7 +81,11 @@ document.addEventListener('DOMContentLoaded', ()=>{
         form.appendChild(input2)
         form.appendChild(addQuoteButton)
         document.body.appendChild(form)
-       
+        const userCategoryInputValue=input1.value.trim()
+        const userQuoteInputValue=input2.value.trim()
+        localStorage.setItem(addedCategory, JSON.stringify(userCategoryInputValue))
+        localStorage.setItem(addedQuote, JSON.stringify(userCategoryInputValue))
+        
 
 
     } 
@@ -101,4 +94,5 @@ document.addEventListener('DOMContentLoaded', ()=>{
     addQuoteButton.id='addQuote'
     document.body.appendChild(addQuoteButton)
     addQuoteButton.addEventListener('click', createAddQuoteForm)
+
 })
