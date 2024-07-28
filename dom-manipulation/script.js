@@ -61,7 +61,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
     const addButton=document.getElementById('addQuote')
 
     function createAddQuoteForm(){
-        const userCategoryInputValue=userCategory.value.trim()
+       /*  const userCategoryInputValue=userCategory.value.trim()
         const userQuoteInputValue=userQuote.value.trim()
         for (let element of arrayQuotes){
             if(userCategoryInputValue===element.category){
@@ -72,7 +72,33 @@ document.addEventListener('DOMContentLoaded', ()=>{
             else {
                 alert('Quote category not found')
             }
-        }
-    }
-    addButton.addEventListener('click', createAddQuoteForm)
+        }*/
+      const form= document.createElement('form')
+       const input1=document.createElement('input')
+       const input2=document.createElement('input')
+       const h2=document.createElement('h2')
+       //const addQuoteButton=document.createElement('button')
+       addQuoteButton.textContent='Add Quote'
+       addQuoteButton.id='addQuote'
+       h2.textContent='Add your own quote'
+       input1.placeholder='Enter quote category'
+       input1.type='text'
+       input1.id='newQuoteCategory'
+       input2.placeholder='Enter a new quote'
+       input2.type='text'
+        input1.id='newQuoteText'
+        form.appendChild(h2)
+        form.appendChild(input1)
+        form.appendChild(input2)
+        form.appendChild(addQuoteButton)
+        document.body.appendChild(form)
+       
+
+
+    } 
+    const addQuoteButton=document.createElement('button')
+    addQuoteButton.textContent='Add Quote'
+    addQuoteButton.id='addQuote'
+    document.body.appendChild(addQuoteButton)
+    addQuoteButton.addEventListener('click', createAddQuoteForm)
 })
