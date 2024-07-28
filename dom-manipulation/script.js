@@ -59,7 +59,8 @@ document.addEventListener('DOMContentLoaded', ()=>{
     const userCategory=document.getElementById('newQuoteCategory')
     const userQuote=document.getElementById('newQuoteText')
     const addButton=document.getElementById('addQuote')
-    function addQuote(){
+
+    function createAddQuoteForm(){
         const userCategoryInputValue=userCategory.value.trim()
         const userQuoteInputValue=userQuote.value.trim()
         for (let element of arrayQuotes){
@@ -73,5 +74,5 @@ document.addEventListener('DOMContentLoaded', ()=>{
             }
         }
     }
-    addButton.addEventListener('click', addQuote)
+    addButton.addEventListener('click', createAddQuoteForm)
 })
