@@ -43,7 +43,7 @@ const arrayQuotes=[
 document.addEventListener('DOMContentLoaded', ()=>{
     const button=document.getElementById('newQuote')
     const displayedDiv=document.getElementById('quoteDisplay')
-    function showQuote() {
+    function showRandomQuote() {
     const randomIndexArrayQuotes=Math.floor(Math.random()*arrayQuotes.length)
     const category=arrayQuotes[randomIndexArrayQuotes].category
     const displayedText=arrayQuotes[randomIndexArrayQuotes].text
@@ -57,7 +57,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
     p.textContent=`Quote: ${displayedTextElement}`
     displayedDiv.appendChild(p)
     }
-    button.addEventListener('click', showQuote)
+    button.addEventListener('click', showRandomQuote)
     const userCategory=document.getElementById('newQuoteCategory')
     const userQuote=document.getElementById('newQuoteText')
     const addButton=document.getElementById('addQuote')
@@ -77,4 +77,3 @@ document.addEventListener('DOMContentLoaded', ()=>{
     }
     addButton.addEventListener('click', addQuote)
 })
-console.log(arrayQuotes[3].category)
