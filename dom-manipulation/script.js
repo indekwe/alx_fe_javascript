@@ -123,15 +123,19 @@ document.addEventListener('DOMContentLoaded', ()=>{
     localStorage.setItem('filteredText', JSON.stringify(displayedText))
        }
        selection.addEventListener('change', filterQuotes)
-       document.addEventListener('DOMContentLoaded', ()=>{
-        const filteredCategoryFromLocalStorage=JSON.parse(localStorage.getItem('filteredCategory'))
-        const filteredTextFromLocalStorage=JSON.parse(localStorage.getItem('filteredText'))
-        const displayedDiv=document.getElementById('quoteDisplay')
-        displayedDiv.innerHTML=`
-        <h2>${filteredCategoryFromLocalStorage}</h2>
-        <p>Quote: ${filteredTextFromLocalStorage}</p>
-        `
-       })
+       function populateCategories (){
+            const categoryFilter=JSON.parse(localStorage.getItem('filteredCategory'))
+            const populateCategories=JSON.parse(localStorage.getItem('filteredText'))
+            const displayedDiv=document.getElementById('quoteDisplay')
+            const filterMap=populateCategories.map(item=>{
+                item
+            })
+            displayedDiv.innerHTML=`
+            <h2>${categoryFilter}</h2>
+            <p>Quote: ${populateCategories}</p>
+            `
+           }
+       document.addEventListener('DOMContentLoaded', )
        function addQuote(){
             const newQuoteObjFromLocalStorage=JSON.parse(localStorage.getItem('newQuoteObject'))
             const newOption=document.createElement('option')
