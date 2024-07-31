@@ -112,11 +112,11 @@ document.addEventListener('DOMContentLoaded', ()=>{
         const selectedObjQuote=arrayQuotes.find(obj=>selection.value===obj.category)
         
     const selectedArrayQuote=Math.floor(Math.random()*selectedObjQuote.text.length)
-    const selectedArrayCategory=selectedObjQuote.category
-    const displayedText=selectedObjQuote.text[selectedArrayQuote]
+    const selectedCategory=selectedObjQuote.category
+    const displayedText=selectedObjQuote.text[selectedCategory]
     const displayedDiv=document.getElementById('quoteDisplay')
     displayedDiv.innerHTML=`
-    <h2>${selectedArrayCategory}</h2>
+    <h2>${selectedCategory}</h2>
     <p>Quote: ${displayedText}</p>
     ` 
     localStorage.setItem('filteredCategory', JSON.stringify(selectedArrayCategory))
