@@ -1,48 +1,13 @@
-const arrayQuotes=[
-    {
-        category: 'Success',
-        text: [
-            'Success is not final, failure is not fatal: It is the courage to continue that counts.',
-            "The only place where success comes before work is in the dictionary.",
-            "Success is not how high you have climbed, but how you make a positive difference to the world." ,
-            "Success is walking from failure to failure with no loss of enthusiasm.",
-            "Success usually comes to those who are too busy to be looking for it." 
-        ]
-    },
-    {
-        category: 'Destiny',
-        text: [
-            "It is not in the stars to hold our destiny but in ourselves.",
-            "Destiny is not a matter of chance; it is a matter of choice. It is not a thing to be waited for, it is a thing to be achieved.",
-            "Your destiny is to fulfill those things upon which you focus most intently. So choose to keep your focus on that which is truly magnificent, beautiful, uplifting, and joyful. Your life is always moving toward something."  ,
-            "Control your own destiny or someone else will.",
-        ]
-    },
-    {
-        category: 'Failure',
-        text: [
-            "Failure is simply the opportunity to begin again, this time more intelligently.",
-            "I have not failed. I've just found 10,000 ways that won't work.",
-            "Success is stumbling from failure to failure with no loss of enthusiasm.",
-            "Do not be embarrassed by your failures, learn from them and start again.",
-            "Only those who dare to fail greatly can ever achieve greatly."
-        ]
-    },
-    {
-        category: 'Heartbroken',
-        text: [
-            "The emotion that can break your heart is sometimes the very one that heals it...",
-            "The heart was made to be broken.",
-            "Don't cry when the sun is gone, because the tears won't let you see the stars.",
-            "It is better to have loved and lost, than never to have loved at all.",
-            "The cure for a broken heart is simple, my lady. A hot bath and a good night's sleep."  
-        ]
-    },
-    
-]
 document.addEventListener('DOMContentLoaded', ()=>{
+    const arrayQuotess=localStorage.getItem('arrayQuotes')
+    let arrayQuotes=JSON.parse(arrayQuotess)
     const button=document.getElementById('newQuote')
     const displayedDiv=document.getElementById('quoteDisplay')
+    const form= document.createElement('form')
+    const input1=document.createElement('input')
+    const input2=document.createElement('input')
+    const h2=document.createElement('h2')
+    const addQuoteButton=document.createElement('button'     )
     function showRandomQuote() {
     const randomIndexArrayQuotes=Math.floor(Math.random()*arrayQuotes.length)
     const category=arrayQuotes[randomIndexArrayQuotes].category
@@ -55,59 +20,127 @@ document.addEventListener('DOMContentLoaded', ()=>{
     <p>Quote: ${displayedTextElement}</p>
     `
     }
-    button.addEventListener('click', showRandomQuote)
-    const userCategory=document.getElementById('newQuoteCategory')
-    const userQuote=document.getElementById('newQuoteText')
-    const addButton=document.getElementById('addQuote')
-
     function createAddQuoteForm(){
-       
-      const form= document.createElement('form')
-       const input1=document.createElement('input')
-       const input2=document.createElement('input')
-       const h2=document.createElement('h2')
-       //const addQuoteButton=document.createElement('button')
-       addQuoteButton.textContent='Add Quote'
-       addQuoteButton.id='addQuote'
-       h2.textContent='Add your own quote'
-       input1.placeholder='Enter quote category'
-       input1.type='text'
-       input1.id='newQuoteCategory'
-       input2.placeholder='Enter a new quote'
-       input2.type='text'
-        input1.id='newQuoteText'
-        form.appendChild(h2)
-        form.appendChild(input1)
-        form.appendChild(input2)
-        form.appendChild(addQuoteButton)
-        document.body.appendChild(form)
+         addQuoteButton.textContent='Add Quote'
+         h2.textContent='Add your own quote'
+         input1.placeholder='Enter quote category'
+         input1.type='text'
+         input2.placeholder='Enter a new quote'
+         input2.type='text'
+          form.appendChild(h2)
+          form.appendChild(input1)
+          form.appendChild(input2)
+          form.appendChild(addQuoteButton)
+          document.body.appendChild(form)
+      } 
+    button.addEventListener('click', ()=>{
+        showRandomQuote()
+        createAddQuoteForm()
+    })
+    addQuoteButton.addEventListener('click', (e)=>{ 
+        e.preventDefault()
         const userCategoryInputValue=input1.value.trim()
         const userQuoteInputValue=input2.value.trim()
-        localStorage.setItem(addedCategory, JSON.stringify(userCategoryInputValue))
-        localStorage.setItem(addedQuote, JSON.stringify(userCategoryInputValue))
-        const categoryLocalStorage=localStorage.getItem(addedCategory)
-        const categoryArray=[...categoryArray]
-        function checkLocalSotarge(inputString) {
-            const contains = ["application/json", "Blob"];
-        
+        const quoteObj=arrayQuotes.find(obj=>obj.category===userCategoryInputValue)
+        if(quoteObj){
+            quoteObj.text.push(userQuoteInputValue)
+            localStorage.setItem('arrayQuotes', JSON.stringify(arrayQuotes))
         }
+        else if(userCategoryInputValue && userQuoteInputValue){
+            const newQuoteObj={
+                category: userCategoryInputValue,
+                text: [userQuoteInputValue]
+            }
+            const arrayQuotes=JSON.parse(localStorage.getItem('arrayQuotes'))
+            arrayQuotes.push(newQuoteObj)
+            localStorage.setItem('arrayQuotes', JSON.stringify(arrayQuotes))
+            localStorage.setItem('newQuoteObject', JSON.stringify(newQuoteObj))
+            alert('New quote category is added')
+        }
+        else {alert('Category or Text is empty')}
+        
+        })
+        const blobed= new Blob([arrayQuotes], { type: 'application/json'})
+        const quoteUrl=URL.createObjectURL(blobed)
+        const downlodButton=document.createElement('button')
+       const downloadLink= document.createElement('a')
+       downloadLink.href=quoteUrl
+       downloadLink.download='quote json'
+       downlodButton.textContent='Download quotes'
+       downloadLink.appendChild(downlodButton)
+       document.body.appendChild(downloadLink)
+       URL.revokeObjectURL(quoteUrl)
+       const chooseFileInput=document.createElement('input')
+       chooseFileInput.type='file'
+       chooseFileInput.accept='.json'
+       document.body.appendChild(chooseFileInput)
+       chooseFileInput.addEventListener('change', (e)=>{
+            const fileReading= new FileReader()
+            fileReading.onload=(e)=>{
+                const importedQuotes=JSON.parse(e.target.result)
+                arrayQuotes.push(...importedQuotes)
+                localStorage.setItem('arrayquotes', JSON.stringify(arrayQuotes))
+                alert('Quote saved')
 
-    } 
-    const addQuoteButton=document.createElement('button')
-    addQuoteButton.textContent='Add Quote'
-    addQuoteButton.id='addQuote'
-    document.body.appendChild(addQuoteButton)
-    addQuoteButton.addEventListener('click', createAddQuoteForm)
+            }
+            fileReading.readAsText(e.target.files[0])
+       })
+      const selection= document.createElement('select')
+      const option1= document.createElement('option')
+      const option2= document.createElement('option')
+      const option3= document.createElement('option')
+      const option4= document.createElement('option')
+      option1.value='Success'
+      option2.value='Failure'
+      option3.value='Heartbroken'
+      option4.value='Destiny'
+      option1.textContent='Success'
+      option2.textContent='Failure'
+      option3.textContent='Heartbroken'
+      option4.textContent='Destiny'
+      selection.appendChild(option1)
+      selection.appendChild(option2)
+      selection.appendChild(option3)
+      selection.appendChild(option4)
+       document.body.appendChild(selection)
+       function filterQuotes(e){
+        e.preventDefault()
+        const option1Value=option1.value
+        const option2Value=option2.value
+        const option3Value=option3.value
+        const option4Value=option4.value
+        const selectedObjQuote=arrayQuotes.find(obj=>selection.value===obj.category)
+        
+    const selectedArrayQuote=Math.floor(Math.random()*selectedObjQuote.text.length)
+    const selectedArrayCategory=selectedObjQuote.category
+    const displayedText=selectedObjQuote.text[selectedArrayQuote]
+    const displayedDiv=document.getElementById('quoteDisplay')
+    displayedDiv.innerHTML=`
+    <h2>${selectedArrayCategory}</h2>
+    <p>Quote: ${displayedText}</p>
+    ` 
+    localStorage.setItem('filteredCategory', JSON.stringify(selectedArrayCategory))
+    localStorage.setItem('filteredText', JSON.stringify(displayedText))
+       }
+       selection.addEventListener('change', filterQuotes)
+       document.addEventListener('DOMContentLoaded', ()=>{
+        const filteredCategoryFromLocalStorage=JSON.parse(localStorage.getItem('filteredCategory'))
+        const filteredTextFromLocalStorage=JSON.parse(localStorage.getItem('filteredText'))
+        const displayedDiv=document.getElementById('quoteDisplay')
+        displayedDiv.innerHTML=`
+        <h2>${filteredCategoryFromLocalStorage}</h2>
+        <p>Quote: ${filteredTextFromLocalStorage}</p>
+        `
+       })
+       function addQuote(){
+            const newQuoteObjFromLocalStorage=JSON.parse(localStorage.getItem('newQuoteObject'))
+            const newOption=document.createElement('option')
+            newOption.textContent=`${newQuoteObjFromLocalStorage.category}`
+            selection.appendChild(newOption)
+
+       }
+       document.addEventListener('change', addQuote)
+      console.log(localStorage)
+    })
     
-  function importFromJsonFile(event) {
-    const fileReader = new FileReader();
-    fileReader.onload = function(event) {
-      const importedQuotes = JSON.parse(event.target.result);
-      quotes.push(...importedQuotes);
-      saveQuotes();
-      alert('Quotes imported successfully!');
-    };
-    fileReader.readAsText(event.target.files[0]);
-  }
-  
-})
+   
