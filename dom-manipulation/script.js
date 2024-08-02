@@ -135,15 +135,49 @@ document.addEventListener('DOMContentLoaded', ()=>{
             <p>Quote: ${populateCategories}</p>
             `
            }
-       document.addEventListener('DOMContentLoaded', )
-       function addQuote(){
+           function addQuote(){
             const newQuoteObjFromLocalStorage=JSON.parse(localStorage.getItem('newQuoteObject'))
             const newOption=document.createElement('option')
             newOption.textContent=`${newQuoteObjFromLocalStorage.category}`
             selection.appendChild(newOption)
 
        }
+       document.addEventListener('DOMContentLoaded', addQuote)
+       
        document.addEventListener('change', addQuote)
+       async function quotesFromServer(){
+        const mockURL="http://localhost:3000/"
+        try{
+            const response= await fetch(mockURL)
+            const jsonedData= await response.json
+            return jsonedData
+        }
+        catch(error){
+            console.error('error in server:',error )
+        }
+       }
+       const quotesFromLocalStorage=JSON.parse(localStorage.getItem('arrayQuotes'))
+       async function fetchFromLocalStorage() {
+        
+            const quotesFromServerVariables= await quotesFromServer()
+            //pre-resolving of conflicts
+            const resolvedQuotes=resolvingConflicts(quotesFromLocalStorage,quotesFromServerVariables)
+        
+       }
+       function resolvingConflicts(localStorageQuotes,serverQuotes){
+        const combinedQuoptes=[...localStorageQuotes, ...serverQuotes]
+        const finalArrayQuote=[...new Set(combinedQuoptes)]
+        return finalArrayQuote
+       }
+       if(resolvingConflicts){
+        alert('Conflict resolved')
+       }
+       const resolveBtn=document.createElement('button')
+       resolveBtn.textContent='Resolve conflict'
+       resolveBtn.addEventListener('click', resolvingConflicts)
+       document.body.appendChild(resolveBtn)
+       
+       console.log(quotesFromLocalStorage)
       console.log(localStorage)
     })
     
