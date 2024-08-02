@@ -164,9 +164,28 @@ document.addEventListener('DOMContentLoaded', ()=>{
             const resolvedQuotes=resolvingConflicts(quotesFromLocalStorage,quotesFromServerVariables)
         
        }
+       async function addQuoteToServer() {
+            const adddedQuoteServer= JSON.parse(localStorage.getItem('newQuoteObject'))
+            try {
+                const response= await fetch(mockURL, {
+                    method: 'POST',
+                    header: {
+                        'content-type': 'application/json'
+                    },
+                    body: JSON.stringify(adddedQuoteServer)
+                })
+                if(!response.ok){
+                    throw new Error('Quote not added to the server')
+                }
+            }
+            catch(error){
+                console.error('No quote added to the server:',error)
+            }
+       }
        function resolvingConflicts(localStorageQuotes,serverQuotes){
         const combinedQuoptes=[...localStorageQuotes, ...serverQuotes]
         const finalArrayQuote=[...new Set(combinedQuoptes)]
+        localStorage.setItem('finalResolvedQuoteArray', JSON.stringify(finalArrayQuote))
         return finalArrayQuote
        }
        if(resolvingConflicts){
