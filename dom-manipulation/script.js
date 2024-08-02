@@ -176,9 +176,6 @@ document.addEventListener('DOMContentLoaded', ()=>{
        resolveBtn.textContent='Resolve conflict'
        resolveBtn.addEventListener('click', resolvingConflicts)
        document.body.appendChild(resolveBtn)
-       
-       console.log(quotesFromLocalStorage)
-      console.log(localStorage)
     })
     
    
