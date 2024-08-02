@@ -145,7 +145,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
        document.addEventListener('DOMContentLoaded', addQuote)
        
        document.addEventListener('change', addQuote)
-       async function quotesFromServer(){
+       async function fetchQuotesFromServer(){
         const mockURL="http://localhost:3000/"
         try{
             const response= await fetch(mockURL)
@@ -159,7 +159,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
        const quotesFromLocalStorage=JSON.parse(localStorage.getItem('arrayQuotes'))
        async function fetchFromLocalStorage() {
         
-            const quotesFromServerVariables= await quotesFromServer()
+            const quotesFromServerVariables= await fetchQuotesFromServer()
             //pre-resolving of conflicts
             const resolvedQuotes=resolvingConflicts(quotesFromLocalStorage,quotesFromServerVariables)
         
