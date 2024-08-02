@@ -146,7 +146,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
        
        document.addEventListener('change', addQuote)
        async function fetchQuotesFromServer(){
-        const mockURL="http://localhost:3000/"
+        const mockURL="https://jsonplaceholder.typicode.com/posts"
         try{
             const response= await fetch(mockURL)
             const jsonedData= await response.json
